@@ -7,7 +7,8 @@ module.exports = {
     "plugin:vue/essential",
     "@vue/prettier",
     "eslint:recommended",
-    "@vue/typescript"
+    "@vue/typescript",
+    "plugin:json/recommended"
   ],
   rules: {
     "no-console": process.env.NODE_ENV === "production" ? "error" : "off",
