@@ -1,18 +1,17 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+    <img alt="Vue logo" src="@/assets/logo.png" />
+    <pkv-rechnung-tabelle msg="Welcome to Your Vue.js App" />
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from "@/components/HelloWorld.vue";
+import RechnungTabelle from "@/components/RechnungTabelle.vue";
 
 export default {
   name: "home",
   components: {
-    HelloWorld
+    "pkv-rechnung-tabelle": RechnungTabelle
   }
 };
 </script>

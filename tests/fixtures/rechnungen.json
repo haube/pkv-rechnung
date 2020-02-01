@@ -1,0 +1,20 @@
+[
+  {
+    "id": "0",
+    "arzt": "Dr. Hyde",
+    "datum": "31.01.2020",
+    "betrag": "29.99"
+  },
+  {
+    "id": "1",
+    "arzt": "Dr. Test",
+    "datum": "31.01.2020",
+    "betrag": "199"
+  },
+  {
+    "id": "2",
+    "arzt": "Dr. Test",
+    "datum": "31.01.2020",
+    "betrag": "199"
+  }
+]
