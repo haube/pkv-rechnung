@@ -1,6 +1,7 @@
 <template>
   <div align="center">
-    <form id="search">Search <input name="query" v-model="searchQuery" /></form>
+    <h2>Rechnungen</h2>
+    <b>Search</b> <input name="query" v-model="searchQuery" />
     <pkv-tabelle
       :data="rechnungen"
       :columns="gridColumns"

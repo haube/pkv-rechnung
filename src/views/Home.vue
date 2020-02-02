@@ -1,9 +1,12 @@
 <template>
   <div class="home">
     <img alt="Vue logo" src="@/assets/logo.png" />
-    <h2>
-      Willkommen, Heute ist {{ new Date() | moment("dddd, DD MMMM YYYY") }}
-    </h2>
+    <div align="left">
+      <h2>
+        Willkommen, Heute ist<br />
+        {{ new Date() | moment("dddd, Do MMMM YYYY") }}
+      </h2>
+    </div>
     <pkv-rechnung-tabelle />
   </div>
 </template>
