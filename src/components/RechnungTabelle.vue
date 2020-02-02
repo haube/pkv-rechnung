@@ -50,6 +50,8 @@ export default Vue.extend({
   mounted(): void {
     console.log("mounted");
     console.log("rechnungen: ", this.rechnungen);
+
+    this.$log.debug("mounted ");
   }
 });
 </script>
