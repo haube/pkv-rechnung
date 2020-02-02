@@ -28,7 +28,7 @@
 <script>
 import Vue from "vue";
 export default Vue.extend({
-  name: "DemoGrid",
+  name: "Tabelle",
 
   props: {
     data: Array,

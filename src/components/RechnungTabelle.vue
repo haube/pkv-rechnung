@@ -1,26 +1,26 @@
 <template>
   <div align="center">
     <form id="search">Search <input name="query" v-model="searchQuery" /></form>
-    <demo-grid
+    <pkv-tabelle
       :data="rechnungen"
       :columns="gridColumns"
       :filter-key="searchQuery"
     >
-    </demo-grid>
+    </pkv-tabelle>
     <h2>{{ summe }} Euro</h2>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
-import DemoGrid from "@/components/DemoGrid.vue";
+import Tabelle from "@/components/Tabelle.vue";
 import rechnungenData from "@/../tests/fixtures/rechnungen.json";
 import { Rechnung } from "@/types"; // Our interface#
 
 export default Vue.extend({
   name: "RechnungTabelle" as string,
   components: {
-    "demo-grid": DemoGrid
+    "pkv-tabelle": Tabelle
   },
   props: {
     msg: String
