@@ -22,9 +22,7 @@ export default Vue.extend({
   components: {
     "pkv-tabelle": Tabelle
   },
-  props: {
-    msg: String
-  },
+  props: {},
   data() {
     console.log(this.$options.name, "data");
     return {
