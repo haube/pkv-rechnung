@@ -74,7 +74,9 @@ export default Vue.extend({
   },
   filters: {
     capitalize: function(str) {
-      return str.charAt(0).toUpperCase() + str.slice(1);
+      return (str.charAt(0).toUpperCase() + str.slice(1))
+        .replace(/([A-Z])/g, " $1")
+        .trim();
     }
   },
   methods: {
