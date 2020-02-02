@@ -85,10 +85,10 @@ export default Vue.extend({
   },
 
   mounted() {
-    console.log("mounted");
-    console.log("data: ", this.data);
-    console.log("colums: ", this.columns);
-    console.log("filterKey: ", this.filterKey);
+    console.log(this.$options.name, "mounted");
+    console.log(this.$options.name, "data: ", this.data);
+    console.log(this.$options.name, "colums: ", this.columns);
+    console.log(this.$options.name, "filterKey: ", this.filterKey);
   }
 });
 </script>

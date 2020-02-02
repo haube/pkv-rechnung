@@ -12,6 +12,9 @@ export default {
   name: "home",
   components: {
     "pkv-rechnung-tabelle": RechnungTabelle
+  },
+  mounted() {
+    console.log(this.$options.name, "mounted");
   }
 };
 </script>
