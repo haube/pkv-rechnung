@@ -1,23 +1,55 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-    <h2>{{ rechnungen }}</h2>
+  <div align="center">
+    <form id="search">Search <input name="query" v-model="searchQuery" /></form>
+    <demo-grid
+      :data="rechnungen"
+      :columns="gridColumns"
+      :filter-key="searchQuery"
+    >
+    </demo-grid>
+    <h2>{{ summe }} Euro</h2>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
+import DemoGrid from "@/components/DemoGrid.vue";
 import rechnungenData from "@/../tests/fixtures/rechnungen.json";
+import { Rechnung } from "@/types"; // Our interface#
 
 export default Vue.extend({
-  name: "HelloWorld",
+  name: "RechnungTabelle" as string,
+  components: {
+    "demo-grid": DemoGrid
+  },
   props: {
     msg: String
   },
+  data() {
+    console.log("data");
+    return {
+      rechnungen: rechnungenData as Array<Rechnung>,
+      searchQuery: "" as String,
+      gridColumns: ["arzt", "datum", "betrag"]
+    };
+  },
   computed: {
-    rechnungen() {
-      return rechnungenData;
+    summe(): number {
+      console.log("summe");
+      let sum: number = 0;
+      // Rechnungen werden erst leer in Data deklariert, daher wird hier zunächst ein leeres Array berechnet, wo kein reduce existiert.
+      if (this.rechnungen.length > 0) {
+        sum = this.rechnungen.reduce(function(accumulator, rechnung) {
+          return accumulator + rechnung.betrag;
+        }, 0);
+      }
+      return sum;
     }
+  },
+
+  mounted(): void {
+    console.log("mounted");
+    console.log("rechnungen: ", this.rechnungen);
   }
 });
 </script>
