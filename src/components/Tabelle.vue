@@ -76,7 +76,15 @@ export default Vue.extend({
         payloadDisplay = payloadDisplay.slice().sort(function(a: any, b: any) {
           switch (typeof a[sortKey]) {
             case "string":
-              return a[sortKey].localeCompare(b[sortKey]) * order;
+              return (
+                a[sortKey].localeCompare(b[sortKey], "de", {
+                  sensitivity: "base",
+                  numeric: true,
+                  caseFirst: "upper",
+                  usage: "sort",
+                  ignorePunctuation: true
+                }) * order
+              );
             default:
               return (
                 (a[sortKey] === b[sortKey]

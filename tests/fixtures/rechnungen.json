@@ -12,7 +12,7 @@
   {
     "id": "1",
     "arzt": "Dr. J.kl",
-    "datum": "2019-07-31T11:56:48Z",
+    "datum": "2019-07-01T11:56:48Z",
     "betrag": 122,
     "beihilfeEingereichtAm": "",
     "pkvEingereichtAm": "",
@@ -22,7 +22,7 @@
   {
     "id": "2",
     "arzt": "Dr. Test",
-    "datum": "2015-07-01T11:56:48Z",
+    "datum": "2015-07-15T11:56:48Z",
     "betrag": 199,
     "beihilfeEingereichtAm": "2018-09-12T18:56:48Z",
     "pkvEingereichtAm": "2020-09-30T18:56:48Z",
