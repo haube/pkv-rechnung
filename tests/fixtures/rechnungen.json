@@ -4,7 +4,7 @@
     "arzt": "Dr. Hyde",
     "datum": "2018-07-31T11:56:48Z",
     "betrag": 29.99,
-    "beihilfeEingereichtAm": "2018-09-31T18:56:48Z",
+    "beihilfeEingereichtAm": "2018-09-30T18:56:48Z",
     "pkvEingereichtAm": "",
     "bemerkung": "Erkältung",
     "scan": "/xyz.pdf"
@@ -22,10 +22,10 @@
   {
     "id": "2",
     "arzt": "Dr. Test",
-    "datum": "2015-07-31T11:56:48Z",
+    "datum": "2015-07-01T11:56:48Z",
     "betrag": 199,
-    "beihilfeEingereichtAm": "2018-09-31T18:56:48Z",
-    "pkvEingereichtAm": "2020-09-31T18:56:48Z",
+    "beihilfeEingereichtAm": "2018-09-12T18:56:48Z",
+    "pkvEingereichtAm": "2020-09-30T18:56:48Z",
     "bemerkung": "Zahnarzt Kontrolle",
     "scan": "/xyz.pdf"
   }

@@ -18,7 +18,12 @@
     <tbody>
       <tr v-for="(entry, idx) in filteredData" :key="idx">
         <td v-for="(key, idxR) in columns" :key="idxR">
-          {{ entry[key] }}
+          <div v-if="typeof entry[key] === 'string'">
+            {{ entry[key] | moment("DD.MM.YYYY") }}
+          </div>
+          <div v-else>
+            {{ entry[key] }}
+          </div>
         </td>
       </tr>
     </tbody>
