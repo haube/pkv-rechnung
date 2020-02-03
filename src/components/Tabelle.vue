@@ -25,72 +25,93 @@
   </table>
 </template>
 
-<script>
+<script lang="ts">
 import Vue from "vue";
-export default Vue.extend({
-  name: "Tabelle",
 
+export default Vue.extend({
+  name: "Tabelle" as string,
   props: {
-    data: Array,
-    columns: Array,
+    payload: { type: Array as () => Array<string> },
+    columns: { type: Array as () => Array<string> },
     filterKey: String
   },
-  data: function() {
-    var sortOrders = {};
-    this.columns.forEach(function(key) {
-      sortOrders[key] = 1;
-    });
+  data(): {
+    sortKey: string;
+    sortOrders: { [key: string]: number };
+  } {
+    let sortOrders = {} as { [key: string]: number };
+    if (this.columns) {
+      this.columns.forEach(function(key: string) {
+        sortOrders[key] = 1;
+      });
+    }
     return {
       sortKey: "",
       sortOrders: sortOrders
     };
   },
   computed: {
-    filteredData: function() {
+    filteredData(): Array<any> {
       var sortKey = this.sortKey;
-      var filterKey = this.filterKey && this.filterKey.toLowerCase();
+      var filterKey = this.filterKey && this.filterKey.toUpperCase();
       var order = this.sortOrders[sortKey] || 1;
-      var data = this.data;
+      var payloadDisplay = this.payload;
       if (filterKey) {
-        data = data.filter(function(row) {
+        payloadDisplay = payloadDisplay.filter(function(row: any) {
           return Object.keys(row).some(function(key) {
             return (
               String(row[key])
-                .toLowerCase()
+                .toUpperCase()
                 .indexOf(filterKey) > -1
             );
           });
         });
       }
       if (sortKey) {
-        data = data.slice().sort(function(a, b) {
-          a = a[sortKey];
-          b = b[sortKey];
-          return (a === b ? 0 : a > b ? 1 : -1) * order;
+        payloadDisplay = payloadDisplay.slice().sort(function(a: any, b: any) {
+          switch (typeof a[sortKey]) {
+            case "string":
+              return a[sortKey].localeCompare(b[sortKey]) * order;
+            default:
+              return (
+                (a[sortKey] === b[sortKey]
+                  ? 0
+                  : a[sortKey] > b[sortKey]
+                  ? 1
+                  : -1) * order
+              );
+          }
         });
       }
-      return data;
+      return payloadDisplay;
     }
   },
   filters: {
-    capitalize: function(str) {
+    capitalize(str: string): String {
       return (str.charAt(0).toUpperCase() + str.slice(1))
         .replace(/([A-Z])/g, " $1")
         .trim();
     }
   },
   methods: {
-    sortBy: function(key) {
+    sortBy(key: string): void {
       this.sortKey = key;
       this.sortOrders[key] = this.sortOrders[key] * -1;
     }
   },
 
-  mounted() {
+  mounted(): void {
     console.log(this.$options.name, "mounted");
-    console.log(this.$options.name, "data: ", this.data);
-    console.log(this.$options.name, "colums: ", this.columns);
-    console.log(this.$options.name, "filterKey: ", this.filterKey);
+    console.log(this.$options.name, "props.payload: ", this.payload);
+    console.log(this.$options.name, "props.columns: ", this.columns);
+    console.log(this.$options.name, "props.filterKey: ", this.filterKey);
+
+    console.log(
+      this.$options.name,
+      "props.payload.slice(): ",
+      this.payload.slice()
+    );
+    // console.log(this.$options.name, "props.filterKey: ", this.$props.filterKey);
   }
 });
 </script>

@@ -3,7 +3,7 @@
     <h2>Rechnungen</h2>
     <b>Search</b> <input name="query" v-model="searchQuery" />
     <pkv-tabelle
-      :data="rechnungen"
+      :payload="rechnungen"
       :columns="gridColumns"
       :filter-key="searchQuery"
     >
@@ -29,7 +29,7 @@ export default Vue.extend({
     console.log(this.$options.name, "data");
     return {
       rechnungen: rechnungenData as Array<Rechnung>,
-      searchQuery: "" as String,
+      searchQuery: "" as string,
       gridColumns: [
         "arzt",
         "datum",
