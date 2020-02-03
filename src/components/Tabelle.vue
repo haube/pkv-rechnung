@@ -31,7 +31,7 @@ import Vue from "vue";
 export default Vue.extend({
   name: "Tabelle" as string,
   props: {
-    payload: { type: Array as () => Array<string> },
+    payload: { type: Array as () => Array<any> },
     columns: { type: Array as () => Array<string> },
     filterKey: String
   },
