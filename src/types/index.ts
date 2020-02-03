@@ -5,8 +5,8 @@ export interface Rechnung {
   arzt: String;
   datum: String;
   betrag: number;
-  beihilfeEingereichtAm: String;
-  pkvEingereichtAm: String;
+  beihilfeEingAm: String;
+  pkvEingAm: String;
   bemerkung: String;
   scan: String;
 }

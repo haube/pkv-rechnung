@@ -34,8 +34,8 @@ export default Vue.extend({
         "arzt",
         "datum",
         "betrag",
-        "beihilfeEingereichtAm",
-        "pkvEingereichtAm",
+        "beihilfeEingAm",
+        "pkvEingAm",
         "bemerkung",
         "scan"
       ]
