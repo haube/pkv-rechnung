@@ -16,7 +16,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr v-for="(entry, idx) in filteredData" :key="idx">
+      <tr v-for="(entry, idx) in filteredData.data" :key="idx">
         <td v-for="(key, idxR) in columns" :key="idxR">
           <div v-if="typeof entry[key] === 'string'">
             {{ entry[key] | moment("DD.MM.YYYY") }}
@@ -27,11 +27,20 @@
         </td>
       </tr>
     </tbody>
+    <tfoot>
+      <!-- <tr>
+        <th scope="row">Summen</th>
+        <td v-for="(key, idxR) in columns" :key="idxR">
+          {{ filteredData.summe[key] }}
+        </td>
+      </tr> -->
+    </tfoot>
   </table>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
+import { FilteredData } from "@/types";
 
 export default Vue.extend({
   name: "Tabelle" as string,
@@ -56,11 +65,11 @@ export default Vue.extend({
     };
   },
   computed: {
-    filteredData(): Array<any> {
-      var sortKey = this.sortKey;
-      var filterKey = this.filterKey && this.filterKey.toUpperCase();
-      var order = this.sortOrders[sortKey] || 1;
-      var payloadDisplay = this.payload;
+    filteredData(): FilteredData {
+      let sortKey = this.sortKey;
+      let filterKey = this.filterKey && this.filterKey.toUpperCase();
+      let order = this.sortOrders[sortKey] || 1;
+      let payloadDisplay: Array<any> = this.payload;
       if (filterKey) {
         payloadDisplay = payloadDisplay.filter(function(row: any) {
           return Object.keys(row).some(function(key) {
@@ -96,7 +105,11 @@ export default Vue.extend({
           }
         });
       }
-      return payloadDisplay;
+
+      let filteredData = {} as FilteredData;
+      filteredData.data = payloadDisplay;
+
+      return filteredData;
     }
   },
   filters: {

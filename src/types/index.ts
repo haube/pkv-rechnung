@@ -10,3 +10,7 @@ export interface Rechnung {
   bemerkung: String;
   scan: String;
 }
+export interface FilteredData {
+  data: Array<any>;
+  summen: { [key: string]: number };
+}
