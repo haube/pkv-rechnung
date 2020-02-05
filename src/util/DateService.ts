@@ -9,7 +9,6 @@ class DateService implements DateServiceI {
     // Keine Exception für Kontrollfluss, Zahlenwerte die zu groß sind werden von Parse auf den nächsten Monat addiert.
     try {
       if (Date.parse(str) >= 0) {
-        console.log(Date.parse(str));
         return true;
       }
     } catch (error) {
