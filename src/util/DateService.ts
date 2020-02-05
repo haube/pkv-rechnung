@@ -12,7 +12,6 @@ class DateService implements DateServiceI {
         return true;
       }
     } catch (error) {
-      console.log(error);
       return false;
     }
     return false;

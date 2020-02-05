@@ -20,7 +20,7 @@ export default {
     "pkv-rechnung-tabelle": RechnungTabelle
   },
   mounted() {
-    console.log(this.$options.name, "mounted");
+    this.$log.debug(this.$options.name, "mounted");
   }
 };
 </script>

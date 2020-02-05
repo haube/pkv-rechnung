@@ -132,12 +132,12 @@ export default Vue.extend({
   },
 
   mounted(): void {
-    console.log(this.$options.name, "mounted");
-    console.log(this.$options.name, "props.payload: ", this.payload);
-    console.log(this.$options.name, "props.columns: ", this.columns);
-    console.log(this.$options.name, "props.filterKey: ", this.filterKey);
-    console.log("DateTEst : ", this.$dateService.checkDate(""));
-    console.log(
+    this.$log.debug(this.$options.name, "mounted");
+    this.$log.debug(this.$options.name, "props.payload: ", this.payload);
+    this.$log.debug(this.$options.name, "props.columns: ", this.columns);
+    this.$log.debug(this.$options.name, "props.filterKey: ", this.filterKey);
+    this.$log.debug("DateTEst : ", this.$dateService.checkDate(""));
+    this.$log.debug(
       this.$options.name,
       "props.payload.slice(): ",
       this.payload.slice()

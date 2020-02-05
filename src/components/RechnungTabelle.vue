@@ -26,7 +26,7 @@ export default Vue.extend({
   },
   props: {},
   data() {
-    console.log(this.$options.name, "data");
+    this.$log.debug(this.$options.name, "data");
     return {
       rechnungen: rechnungenData as Array<Rechnung>,
       searchQuery: "" as string,
@@ -43,7 +43,7 @@ export default Vue.extend({
   },
   computed: {
     summe(): number {
-      console.log(this.$options.name, "summe");
+      this.$log.debug(this.$options.name, "summe");
       let sum: number = 0;
       // Rechnungen werden erst leer in Data deklariert, daher wird hier zunächst ein leeres Array berechnet, wo kein reduce existiert.
       if (this.rechnungen.length > 0) {
@@ -56,9 +56,8 @@ export default Vue.extend({
   },
 
   mounted(): void {
-    console.log(this.$options.name, "mounted");
-    console.log(this.$options.name, "rechnungen: ", this.rechnungen);
-    this.$log.debug("mounted ");
+    this.$log.debug(this.$options.name, "mounted");
+    this.$log.debug(this.$options.name, "rechnungen: ", this.rechnungen);
   }
 });
 </script>

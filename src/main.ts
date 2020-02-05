@@ -18,7 +18,7 @@ const options = {
   logLevel: isProduction ? "error" : "debug",
   stringifyArguments: false,
   showLogLevel: true,
-  showMethodName: true,
+  showMethodName: false, // It always shows the same because of module declare?: "/node_modules/vue/dist/vue" so turn it off
   separator: "|",
   showConsoleColors: true
 };
@@ -28,7 +28,7 @@ Vue.config.productionTip = false;
 
 // Moment js in Vue einbinden und auf deutsch stellen
 moment.locale("de");
-console.log("main.ts", " moment.locale()", moment.locale()); // de
+Vue.$log.debug("main.ts", " moment.locale()", moment.locale()); // de
 Vue.use(VueMoment, { moment });
 Vue.prototype.$dateService = dateService;
 new Vue({
@@ -37,4 +37,4 @@ new Vue({
   render: h => h(App)
 }).$mount("#app");
 
-Vue.$log.info("main.ts finished");
+Vue.$log.debug("main.ts finished");

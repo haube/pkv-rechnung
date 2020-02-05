@@ -10,7 +10,7 @@ describe("DateService.ts", () => {
       "2020-02-31" // Overflow for days will be added > 02.03
     ];
     datesPostive.forEach(date => {
-      console.log("current Date: ", date);
+      console.log("dateService.spec.ts: current Date: ", date);
       expect(dateService.checkDate(date)).to.be.true;
     });
   });
@@ -18,7 +18,7 @@ describe("DateService.ts", () => {
   it("kurzes Datum negativ", () => {
     const datesNegative = ["23/25/2014", "1969-11-31"];
     datesNegative.forEach(date => {
-      console.log("current Date: ", date);
+      console.log("dateService.spec.ts: current Date: ", date);
       expect(dateService.checkDate(date)).to.be.false;
     });
   });
