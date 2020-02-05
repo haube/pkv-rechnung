@@ -16,79 +16,132 @@
       </tr>
     </thead>
     <tbody>
-      <tr v-for="(entry, idx) in filteredData" :key="idx">
+      <tr v-for="(entry, idx) in filteredData.data" :key="idx">
         <td v-for="(key, idxR) in columns" :key="idxR">
-          {{ entry[key] }}
+          <div
+            v-if="
+              typeof entry[key] === 'string' &&
+                $dateService.checkDate(entry[key])
+            "
+          >
+            {{ entry[key] | moment("DD.MM.YYYY") }}
+          </div>
+          <div v-else>
+            {{ entry[key] }}
+          </div>
         </td>
       </tr>
     </tbody>
+    <tfoot>
+      <!-- <tr>
+        <th scope="row">Summen</th>
+        <td v-for="(key, idxR) in columns" :key="idxR">
+          {{ filteredData.summe[key] }}
+        </td>
+      </tr> -->
+    </tfoot>
   </table>
 </template>
 
-<script>
+<script lang="ts">
 import Vue from "vue";
-export default Vue.extend({
-  name: "Tabelle",
+import { FilteredData } from "@/types";
 
+export default Vue.extend({
+  name: "Tabelle" as string,
   props: {
-    data: Array,
-    columns: Array,
+    payload: { type: Array as () => Array<any> },
+    columns: { type: Array as () => Array<string> },
     filterKey: String
   },
-  data: function() {
-    var sortOrders = {};
-    this.columns.forEach(function(key) {
-      sortOrders[key] = 1;
-    });
+  data(): {
+    sortKey: string;
+    sortOrders: { [key: string]: number };
+  } {
+    let sortOrders = {} as { [key: string]: number };
+    if (this.columns) {
+      this.columns.forEach(function(key: string) {
+        sortOrders[key] = 1;
+      });
+    }
     return {
       sortKey: "",
       sortOrders: sortOrders
     };
   },
   computed: {
-    filteredData: function() {
-      var sortKey = this.sortKey;
-      var filterKey = this.filterKey && this.filterKey.toLowerCase();
-      var order = this.sortOrders[sortKey] || 1;
-      var data = this.data;
+    filteredData(): FilteredData {
+      let sortKey = this.sortKey;
+      let filterKey = this.filterKey && this.filterKey.toUpperCase();
+      let order = this.sortOrders[sortKey] || 1;
+      let payloadDisplay: Array<any> = this.payload;
       if (filterKey) {
-        data = data.filter(function(row) {
+        payloadDisplay = payloadDisplay.filter(function(row: any) {
           return Object.keys(row).some(function(key) {
             return (
               String(row[key])
-                .toLowerCase()
+                .toUpperCase()
                 .indexOf(filterKey) > -1
             );
           });
         });
       }
       if (sortKey) {
-        data = data.slice().sort(function(a, b) {
-          a = a[sortKey];
-          b = b[sortKey];
-          return (a === b ? 0 : a > b ? 1 : -1) * order;
+        payloadDisplay = payloadDisplay.slice().sort(function(a: any, b: any) {
+          switch (typeof a[sortKey]) {
+            case "string":
+              return (
+                a[sortKey].localeCompare(b[sortKey], "de", {
+                  sensitivity: "base",
+                  numeric: true,
+                  caseFirst: "upper",
+                  usage: "sort",
+                  ignorePunctuation: true
+                }) * order
+              );
+            default:
+              return (
+                (a[sortKey] === b[sortKey]
+                  ? 0
+                  : a[sortKey] > b[sortKey]
+                  ? 1
+                  : -1) * order
+              );
+          }
         });
       }
-      return data;
+
+      let filteredData = {} as FilteredData;
+      filteredData.data = payloadDisplay;
+
+      return filteredData;
     }
   },
   filters: {
-    capitalize: function(str) {
-      return str.charAt(0).toUpperCase() + str.slice(1);
+    capitalize(str: string): String {
+      return (str.charAt(0).toUpperCase() + str.slice(1))
+        .replace(/([A-Z])/g, " $1")
+        .trim();
     }
   },
   methods: {
-    sortBy: function(key) {
+    sortBy(key: string): void {
       this.sortKey = key;
       this.sortOrders[key] = this.sortOrders[key] * -1;
     }
   },
 
-  mounted() {
-    console.log("mounted");
-    console.log("data: ", this.data);
-    console.log("colums: ", this.columns);
-    console.log("filterKey: ", this.filterKey);
+  mounted(): void {
+    console.log(this.$options.name, "mounted");
+    console.log(this.$options.name, "props.payload: ", this.payload);
+    console.log(this.$options.name, "props.columns: ", this.columns);
+    console.log(this.$options.name, "props.filterKey: ", this.filterKey);
+    console.log("DateTEst : ", this.$dateService.checkDate(""));
+    console.log(
+      this.$options.name,
+      "props.payload.slice(): ",
+      this.payload.slice()
+    );
   }
 });
 </script>
