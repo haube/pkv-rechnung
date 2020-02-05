@@ -1,8 +1,9 @@
 <template>
   <div align="center">
-    <form id="search">Search <input name="query" v-model="searchQuery" /></form>
+    <h2>Rechnungen</h2>
+    <b>Search</b> <input name="query" v-model="searchQuery" />
     <pkv-tabelle
-      :data="rechnungen"
+      :payload="rechnungen"
       :columns="gridColumns"
       :filter-key="searchQuery"
     >
@@ -15,27 +16,34 @@
 import Vue from "vue";
 import Tabelle from "@/components/Tabelle.vue";
 import rechnungenData from "@/../tests/fixtures/rechnungen.json";
-import { Rechnung } from "@/types"; // Our interface#
+import { Rechnung } from "@/types";
+import * as moment from "moment";
 
 export default Vue.extend({
   name: "RechnungTabelle" as string,
   components: {
     "pkv-tabelle": Tabelle
   },
-  props: {
-    msg: String
-  },
+  props: {},
   data() {
-    console.log(this.$options.name, "data");
+    this.$log.debug(this.$options.name, "data");
     return {
       rechnungen: rechnungenData as Array<Rechnung>,
-      searchQuery: "" as String,
-      gridColumns: ["arzt", "datum", "betrag"]
+      searchQuery: "" as string,
+      gridColumns: [
+        "arzt",
+        "datum",
+        "betrag",
+        "beihilfeEingAm",
+        "pkvEingAm",
+        "bemerkung",
+        "scan"
+      ]
     };
   },
   computed: {
     summe(): number {
-      console.log(this.$options.name, "summe");
+      this.$log.debug(this.$options.name, "summe");
       let sum: number = 0;
       // Rechnungen werden erst leer in Data deklariert, daher wird hier zunächst ein leeres Array berechnet, wo kein reduce existiert.
       if (this.rechnungen.length > 0) {
@@ -48,8 +56,8 @@ export default Vue.extend({
   },
 
   mounted(): void {
-    console.log(this.$options.name, "mounted");
-    console.log(this.$options.name, "rechnungen: ", this.rechnungen);
+    this.$log.debug(this.$options.name, "mounted");
+    this.$log.debug(this.$options.name, "rechnungen: ", this.rechnungen);
   }
 });
 </script>

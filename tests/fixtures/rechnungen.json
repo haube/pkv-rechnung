@@ -2,19 +2,31 @@
   {
     "id": "0",
     "arzt": "Dr. Hyde",
-    "datum": "31.01.2015",
-    "betrag": 29.99
+    "datum": "2018-07-31 11:56:48",
+    "betrag": 29.99,
+    "beihilfeEingAm": "2018-09-30",
+    "pkvEingAm": "",
+    "bemerkung": "Erkältung",
+    "scan": "/xyz.pdf"
   },
   {
     "id": "1",
     "arzt": "Dr. J.kl",
-    "datum": "31.01.2020",
-    "betrag": 122
+    "datum": "2019-07-01",
+    "betrag": 122,
+    "beihilfeEingAm": "",
+    "pkvEingAm": "",
+    "bemerkung": "Infekt",
+    "scan": "/xyz.pdf"
   },
   {
     "id": "2",
-    "arzt": "Dr. Test",
-    "datum": "01.01.2020",
-    "betrag": 199
+    "arzt": "Dr.  est",
+    "datum": "2015-07-15",
+    "betrag": 199,
+    "beihilfeEingAm": "2018-09-12",
+    "pkvEingAm": "2020-09-30",
+    "bemerkung": "Zahnarzt Kontrolle",
+    "scan": "/xasyz.pdf"
   }
 ]
