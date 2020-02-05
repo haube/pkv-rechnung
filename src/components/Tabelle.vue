@@ -18,7 +18,12 @@
     <tbody>
       <tr v-for="(entry, idx) in filteredData.data" :key="idx">
         <td v-for="(key, idxR) in columns" :key="idxR">
-          <div v-if="typeof entry[key] === 'string'">
+          <div
+            v-if="
+              typeof entry[key] === 'string' &&
+                $dateService.checkDate(entry[key])
+            "
+          >
             {{ entry[key] | moment("DD.MM.YYYY") }}
           </div>
           <div v-else>
@@ -131,13 +136,12 @@ export default Vue.extend({
     console.log(this.$options.name, "props.payload: ", this.payload);
     console.log(this.$options.name, "props.columns: ", this.columns);
     console.log(this.$options.name, "props.filterKey: ", this.filterKey);
-
+    console.log("DateTEst : ", this.$dateService.checkDate(""));
     console.log(
       this.$options.name,
       "props.payload.slice(): ",
       this.payload.slice()
     );
-    // console.log(this.$options.name, "props.filterKey: ", this.$props.filterKey);
   }
 });
 </script>

@@ -6,6 +6,7 @@ import store from "./store";
 import * as moment from "moment";
 import VueMoment from "vue-moment";
 import "moment/locale/de";
+import { dateService } from "@/util/DateService";
 
 Vue.config.productionTip = false;
 
@@ -13,7 +14,7 @@ Vue.config.productionTip = false;
 moment.locale("de");
 console.log("main.ts", " moment.locale()", moment.locale()); // de
 Vue.use(VueMoment, { moment });
-
+Vue.prototype.$dateService = dateService;
 new Vue({
   router,
   store,
