@@ -7,7 +7,9 @@
     "beihilfeEingAm": "2018-09-30",
     "pkvEingAm": "",
     "bemerkung": "Erkältung",
-    "scan": "/xyz.pdf"
+    "scan": "/xyz.pdf",
+    "erstattungBh": 11,
+    "erstattungPkv": 11
   },
   {
     "id": "1",
@@ -17,7 +19,9 @@
     "beihilfeEingAm": "",
     "pkvEingAm": "",
     "bemerkung": "Infekt",
-    "scan": "/xyz.pdf"
+    "scan": "/xyz.pdf",
+    "erstattungBh": 0,
+    "erstattungPkv": 222
   },
   {
     "id": "2",
@@ -27,6 +31,7 @@
     "beihilfeEingAm": "2018-09-12",
     "pkvEingAm": "2020-09-30",
     "bemerkung": "Zahnarzt Kontrolle",
-    "scan": "/xasyz.pdf"
+    "scan": "/xasyz.pdf",
+    "erstattungBh": 124
   }
 ]
