@@ -6,9 +6,9 @@
       :payload="rechnungen"
       :columns="gridColumns"
       :filter-key="searchQuery"
+      :columnsSumup="columnsSumup"
     >
     </pkv-tabelle>
-    <h2>{{ summe }} Euro</h2>
   </div>
 </template>
 
@@ -37,24 +37,13 @@ export default Vue.extend({
         "beihilfeEingAm",
         "pkvEingAm",
         "bemerkung",
-        "scan"
-      ]
+        "scan",
+        "erstattungBh",
+        "erstattungPkv"
+      ],
+      columnsSumup: ["betrag", "erstattungBh", "erstattungPkv"]
     };
   },
-  computed: {
-    summe(): number {
-      this.$log.debug(this.$options.name, "summe");
-      let sum: number = 0;
-      // Rechnungen werden erst leer in Data deklariert, daher wird hier zunächst ein leeres Array berechnet, wo kein reduce existiert.
-      if (this.rechnungen.length > 0) {
-        sum = this.rechnungen.reduce(function(accumulator, rechnung) {
-          return accumulator + rechnung.betrag;
-        }, 0);
-      }
-      return sum;
-    }
-  },
-
   mounted(): void {
     this.$log.debug(this.$options.name, "mounted");
     this.$log.debug(this.$options.name, "rechnungen: ", this.rechnungen);

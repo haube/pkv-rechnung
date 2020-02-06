@@ -9,8 +9,10 @@ export interface Rechnung {
   pkvEingAm: String;
   bemerkung: String;
   scan: String;
+  erstattungBh: number;
+  erstattungPkv: number;
 }
 export interface FilteredData {
   data: Array<any>;
-  summen: { [key: string]: number };
+  summen: Array<{ key: string; value: number }>;
 }

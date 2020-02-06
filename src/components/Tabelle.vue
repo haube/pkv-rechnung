@@ -33,12 +33,12 @@
       </tr>
     </tbody>
     <tfoot>
-      <!-- <tr>
+      <tr>
         <th scope="row">Summen</th>
-        <td v-for="(key, idxR) in columns" :key="idxR">
-          {{ filteredData.summe[key] }}
+        <td v-for="(column, idxR) in columns.slice(1)" :key="idxR">
+          {{ summeInColumn(filteredData, column) }}
         </td>
-      </tr> -->
+      </tr>
     </tfoot>
   </table>
 </template>
@@ -52,6 +52,7 @@ export default Vue.extend({
   props: {
     payload: { type: Array as () => Array<any> },
     columns: { type: Array as () => Array<string> },
+    columnsSumup: { type: Array as () => Array<string> },
     filterKey: String
   },
   data(): {
@@ -75,6 +76,8 @@ export default Vue.extend({
       let filterKey = this.filterKey && this.filterKey.toUpperCase();
       let order = this.sortOrders[sortKey] || 1;
       let payloadDisplay: Array<any> = this.payload;
+      let summen = [] as Array<{ key: string; value: number }>;
+
       if (filterKey) {
         payloadDisplay = payloadDisplay.filter(function(row: any) {
           return Object.keys(row).some(function(key) {
@@ -86,6 +89,7 @@ export default Vue.extend({
           });
         });
       }
+
       if (sortKey) {
         payloadDisplay = payloadDisplay.slice().sort(function(a: any, b: any) {
           switch (typeof a[sortKey]) {
@@ -111,8 +115,23 @@ export default Vue.extend({
         });
       }
 
+      if (this.columnsSumup && this.columnsSumup.length > 0) {
+        this.columnsSumup.forEach(column => {
+          let columnSum = { key: column, value: 0 };
+          payloadDisplay.forEach(row => {
+            if (row[column] && typeof row[column] === "number") {
+              return (columnSum["value"] += row[column]);
+            } else {
+              return columnSum["value"];
+            }
+          });
+          summen.push(columnSum);
+        });
+      }
+
       let filteredData = {} as FilteredData;
       filteredData.data = payloadDisplay;
+      filteredData.summen = summen;
 
       return filteredData;
     }
@@ -128,6 +147,15 @@ export default Vue.extend({
     sortBy(key: string): void {
       this.sortKey = key;
       this.sortOrders[key] = this.sortOrders[key] * -1;
+    },
+    /**
+     * returns number or empty String if non sum exists in the array
+     */
+    summeInColumn(filteredData: FilteredData, column: string): any {
+      let index = filteredData.summen.findIndex(e => e.key === column);
+      if (index >= 0) {
+        return filteredData.summen[index].value;
+      } else return "";
     }
   },
 
@@ -136,12 +164,6 @@ export default Vue.extend({
     this.$log.debug(this.$options.name, "props.payload: ", this.payload);
     this.$log.debug(this.$options.name, "props.columns: ", this.columns);
     this.$log.debug(this.$options.name, "props.filterKey: ", this.filterKey);
-    this.$log.debug("DateTEst : ", this.$dateService.checkDate(""));
-    this.$log.debug(
-      this.$options.name,
-      "props.payload.slice(): ",
-      this.payload.slice()
-    );
   }
 });
 </script>
