@@ -82,7 +82,10 @@
               :placeholder="capitalize(key.name)"
               onfocus="(this.type='date')"
               onblur="(this.type='text')"
-            /><input
+              min="2015-01-01"
+              max="2099-12-31"
+            />
+            <input
               v-else
               :type="key.type"
               :placeholder="capitalize(key.name)"
