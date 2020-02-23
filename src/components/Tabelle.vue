@@ -1,91 +1,97 @@
 <!-- component template -->
 <template>
-  <table>
-    <thead>
-      <tr>
-        <th
-          v-for="(key, idx) in columns"
-          :key="idx"
-          @click="sortBy(key.name)"
-          :class="{ active: sortKey == key.name }"
-        >
-          {{ key.name | capitalizeFilter }}
-          <span class="arrow" :class="sortOrders[key.name] > 0 ? 'asc' : 'dsc'">
-          </span>
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr v-for="(entry, idx) in filteredData.data" :key="idx">
-        <td v-for="(key, idxR) in columns" :key="idxR">
-          <div v-if="key.type == 'date' && entry[key.name]">
-            {{ entry[key.name] | moment("DD.MM.YYYY") }}
-          </div>
-          <div
-            v-else-if="key.type === 'number' && entry[key.name]"
-            class="numeric"
+  <form>
+    <table>
+      <thead>
+        <tr>
+          <th
+            v-for="(key, idx) in columns"
+            :key="idx"
+            @click="sortBy(key.name)"
+            :class="{ active: sortKey == key.name }"
           >
-            <!-- TOOD Util Function for number Format -->
+            {{ key.name | capitalizeFilter }}
+            <span
+              class="arrow"
+              :class="sortOrders[key.name] > 0 ? 'asc' : 'dsc'"
+            >
+            </span>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="(entry, idx) in filteredData.data" :key="idx">
+          <td v-for="(key, idxR) in columns" :key="idxR">
+            <div v-if="key.type == 'date' && entry[key.name]">
+              {{ entry[key.name] | moment("DD.MM.YYYY") }}
+            </div>
+            <div
+              v-else-if="key.type === 'number' && entry[key.name]"
+              class="numeric"
+            >
+              <!-- TOOD Util Function for number Format -->
+              {{
+                entry[key.name].toLocaleString("de-DE", {
+                  style: "currency",
+                  currency: "EUR"
+                })
+              }}
+            </div>
+            <div v-else>
+              {{ entry[key.name] }}
+            </div>
+          </td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <th scope="row">Summen</th>
+          <td
+            class="numeric"
+            v-for="(column, idxR) in columns.slice(1)"
+            :key="idxR"
+          >
             {{
-              entry[key.name].toLocaleString("de-DE", {
+              summeInColumn(filteredData, column).toLocaleString("de-DE", {
                 style: "currency",
                 currency: "EUR"
               })
             }}
-          </div>
-          <div v-else>
-            {{ entry[key.name] }}
-          </div>
-        </td>
-      </tr>
-    </tbody>
-    <tfoot>
-      <tr>
-        <th scope="row">Summen</th>
-        <td
-          class="numeric"
-          v-for="(column, idxR) in columns.slice(1)"
-          :key="idxR"
-        >
-          {{
-            summeInColumn(filteredData, column).toLocaleString("de-DE", {
-              style: "currency",
-              currency: "EUR"
-            })
-          }}
-        </td>
-      </tr>
-      <tr>
-        <td>Erfassen:</td>
-        <td>
-          <button>Add</button>
-          <button>Clear</button>
-        </td>
-      </tr>
-      <tr>
-        <td v-for="(key, idxR) in columns" :key="idxR">
-          <input
-            v-if="key.type == 'number'"
-            :type="key.type"
-            :placeholder="capitalize(key.name)"
-            min="0.00"
-            step="any"
-          />
-          <input
-            v-else-if="key.type == 'date'"
-            type="text"
-            :placeholder="capitalize(key.name)"
-            onfocus="(this.type='date')"
-            onblur="(this.type='text')"
-          /><input
-            v-else
-            :type="key.type"
-            :placeholder="capitalize(key.name)"
-          />
-        </td>
-      </tr>
-    </tfoot>
-  </table>
+          </td>
+        </tr>
+
+        <tr>
+          <td>Erfassen:</td>
+          <td>
+            <button>Add</button>
+            <input type="reset" />
+          </td>
+        </tr>
+        <tr>
+          <td v-for="(key, idxR) in columns" :key="idxR">
+            <input
+              v-if="key.type == 'number'"
+              :type="key.type"
+              :placeholder="capitalize(key.name)"
+              min="0.00"
+              step="any"
+            />
+            <input
+              v-else-if="key.type == 'date'"
+              type="text"
+              :placeholder="capitalize(key.name)"
+              onfocus="(this.type='date')"
+              onblur="(this.type='text')"
+            /><input
+              v-else
+              :type="key.type"
+              :placeholder="capitalize(key.name)"
+            />
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+  </form>
 </template>
 
 <script lang="ts">
