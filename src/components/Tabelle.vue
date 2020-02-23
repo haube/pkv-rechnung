@@ -73,7 +73,7 @@
           />
           <input
             v-else-if="key.type == 'date'"
-            :type="text"
+            type="text"
             :placeholder="capitalize(key.name)"
             onfocus="(this.type='date')"
             onblur="(this.type='text')"

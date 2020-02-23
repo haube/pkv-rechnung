@@ -37,7 +37,7 @@ export default Vue.extend({
         { name: "beihilfeEingAm", type: "date" } as TableColumn,
         { name: "pkvEingAm", type: "date" } as TableColumn,
         { name: "bemerkung", type: "string" } as TableColumn,
-        { name: "scan", type: "string" } as TableColumn,
+        { name: "scan", type: "file" } as TableColumn,
         { name: "erstattungBh", type: "number" } as TableColumn,
         { name: "erstattungPkv", type: "number" } as TableColumn
       ] as Array<TableColumn>,
