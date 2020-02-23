@@ -16,3 +16,8 @@ export interface FilteredData {
   data: Array<any>;
   summen: Array<{ key: string; value: number }>;
 }
+
+export interface TableColumn {
+  name: string;
+  type: string;
+}

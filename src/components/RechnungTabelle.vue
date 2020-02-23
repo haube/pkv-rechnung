@@ -16,7 +16,7 @@
 import Vue from "vue";
 import Tabelle from "@/components/Tabelle.vue";
 import rechnungenData from "@/../tests/fixtures/rechnungen.json";
-import { Rechnung } from "@/types";
+import { Rechnung, TableColumn } from "@/types";
 import * as moment from "moment";
 
 export default Vue.extend({
@@ -31,16 +31,16 @@ export default Vue.extend({
       rechnungen: rechnungenData as Array<Rechnung>,
       searchQuery: "" as string,
       gridColumns: [
-        "arzt",
-        "datum",
-        "betrag",
-        "beihilfeEingAm",
-        "pkvEingAm",
-        "bemerkung",
-        "scan",
-        "erstattungBh",
-        "erstattungPkv"
-      ],
+        { name: "arzt", type: "string" } as TableColumn,
+        { name: "datum", type: "date" } as TableColumn,
+        { name: "betrag", type: "currency" } as TableColumn,
+        { name: "beihilfeEingAm", type: "date" } as TableColumn,
+        { name: "pkvEingAm", type: "date" } as TableColumn,
+        { name: "bemerkung", type: "string" } as TableColumn,
+        { name: "scan", type: "string" } as TableColumn,
+        { name: "erstattungBh", type: "currency" } as TableColumn,
+        { name: "erstattungPkv", type: "currency" } as TableColumn
+      ] as Array<TableColumn>,
       columnsSumup: ["betrag", "erstattungBh", "erstattungPkv"]
     };
   },

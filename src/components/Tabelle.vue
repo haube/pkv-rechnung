@@ -6,11 +6,11 @@
         <th
           v-for="(key, idx) in columns"
           :key="idx"
-          @click="sortBy(key)"
-          :class="{ active: sortKey == key }"
+          @click="sortBy(key.name)"
+          :class="{ active: sortKey == key.name }"
         >
-          {{ key | capitalizeFilter }}
-          <span class="arrow" :class="sortOrders[key] > 0 ? 'asc' : 'dsc'">
+          {{ key.name | capitalizeFilter }}
+          <span class="arrow" :class="sortOrders[key.name] > 0 ? 'asc' : 'dsc'">
           </span>
         </th>
       </tr>
@@ -18,25 +18,23 @@
     <tbody>
       <tr v-for="(entry, idx) in filteredData.data" :key="idx">
         <td v-for="(key, idxR) in columns" :key="idxR">
-          <div
-            v-if="
-              typeof entry[key] === 'string' &&
-                $dateService.checkDate(entry[key])
-            "
-          >
-            {{ entry[key] | moment("DD.MM.YYYY") }}
+          <div v-if="key.type == 'date' && entry[key.name]">
+            {{ entry[key.name] | moment("DD.MM.YYYY") }}
           </div>
-          <div v-else-if="typeof entry[key] === 'number'" class="numeric">
+          <div
+            v-else-if="key.type === 'currency' && entry[key.name]"
+            class="numeric"
+          >
             <!-- TOOD Util Function for number Format -->
             {{
-              entry[key].toLocaleString("de-DE", {
+              entry[key.name].toLocaleString("de-DE", {
                 style: "currency",
                 currency: "EUR"
               })
             }}
           </div>
           <div v-else>
-            {{ entry[key] }}
+            {{ entry[key.name] }}
           </div>
         </td>
       </tr>
@@ -52,17 +50,21 @@
           {{
             summeInColumn(filteredData, column).toLocaleString("de-DE", {
               style: "currency",
-              currency: "USD"
+              currency: "EUR"
             })
           }}
         </td>
       </tr>
       <tr>
         <td>Erfassen:</td>
+        <td>
+          <button>Add</button>
+          <button>Clear</button>
+        </td>
       </tr>
       <tr>
         <td v-for="(key, idxR) in columns" :key="idxR">
-          <input :placeholder="capitalize(key)" />
+          <input :placeholder="capitalize(key.name)" />
         </td>
       </tr>
     </tfoot>
@@ -71,13 +73,13 @@
 
 <script lang="ts">
 import Vue from "vue";
-import { FilteredData } from "@/types";
+import { FilteredData, TableColumn } from "@/types";
 
 export default Vue.extend({
   name: "Tabelle" as string,
   props: {
     payload: { type: Array as () => Array<any> },
-    columns: { type: Array as () => Array<string> },
+    columns: { type: Array as () => Array<TableColumn> },
     columnsSumup: { type: Array as () => Array<string> },
     filterKey: String
   },
@@ -87,8 +89,8 @@ export default Vue.extend({
   } {
     let sortOrders = {} as { [key: string]: number };
     if (this.columns) {
-      this.columns.forEach(function(key: string) {
-        sortOrders[key] = 1;
+      this.columns.forEach(function(key: TableColumn) {
+        sortOrders[key.name] = 1;
       });
     }
     return {
@@ -183,8 +185,8 @@ export default Vue.extend({
     /**
      * returns number or empty String if non sum exists in the array
      */
-    summeInColumn(filteredData: FilteredData, column: string): any {
-      let index = filteredData.summen.findIndex(e => e.key === column);
+    summeInColumn(filteredData: FilteredData, column: TableColumn): any {
+      let index = filteredData.summen.findIndex(e => e.key === column.name);
       if (index >= 0) {
         return filteredData.summen[index].value;
       } else return "";
