@@ -20,7 +20,7 @@
     "pkvEingAm": "",
     "bemerkung": "Infekt",
     "scan": "/xyz.pdf",
-    "erstattungBh": 0,
+    "erstattungBh": null,
     "erstattungPkv": 222
   },
   {

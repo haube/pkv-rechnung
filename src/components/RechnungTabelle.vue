@@ -33,13 +33,13 @@ export default Vue.extend({
       gridColumns: [
         { name: "arzt", type: "string" } as TableColumn,
         { name: "datum", type: "date" } as TableColumn,
-        { name: "betrag", type: "currency" } as TableColumn,
+        { name: "betrag", type: "number" } as TableColumn,
         { name: "beihilfeEingAm", type: "date" } as TableColumn,
         { name: "pkvEingAm", type: "date" } as TableColumn,
         { name: "bemerkung", type: "string" } as TableColumn,
         { name: "scan", type: "string" } as TableColumn,
-        { name: "erstattungBh", type: "currency" } as TableColumn,
-        { name: "erstattungPkv", type: "currency" } as TableColumn
+        { name: "erstattungBh", type: "number" } as TableColumn,
+        { name: "erstattungPkv", type: "number" } as TableColumn
       ] as Array<TableColumn>,
       columnsSumup: ["betrag", "erstattungBh", "erstattungPkv"]
     };

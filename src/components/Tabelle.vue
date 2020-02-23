@@ -22,7 +22,7 @@
             {{ entry[key.name] | moment("DD.MM.YYYY") }}
           </div>
           <div
-            v-else-if="key.type === 'currency' && entry[key.name]"
+            v-else-if="key.type === 'number' && entry[key.name]"
             class="numeric"
           >
             <!-- TOOD Util Function for number Format -->
@@ -64,7 +64,24 @@
       </tr>
       <tr>
         <td v-for="(key, idxR) in columns" :key="idxR">
-          <input :placeholder="capitalize(key.name)" />
+          <input
+            v-if="key.type == 'number'"
+            :type="key.type"
+            :placeholder="capitalize(key.name)"
+            min="0.00"
+            step="any"
+          />
+          <input
+            v-else-if="key.type == 'date'"
+            :type="text"
+            :placeholder="capitalize(key.name)"
+            onfocus="(this.type='date')"
+            onblur="(this.type='text')"
+          /><input
+            v-else
+            :type="key.type"
+            :placeholder="capitalize(key.name)"
+          />
         </td>
       </tr>
     </tfoot>
@@ -177,6 +194,7 @@ export default Vue.extend({
       this.sortKey = key;
       this.sortOrders[key] = this.sortOrders[key] * -1;
     },
+    //Todo String library(duplicate in filter)
     capitalize(str: string): String {
       return (str.charAt(0).toUpperCase() + str.slice(1))
         .replace(/([A-Z])/g, " $1")
