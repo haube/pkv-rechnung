@@ -9,7 +9,7 @@
           @click="sortBy(key)"
           :class="{ active: sortKey == key }"
         >
-          {{ key | capitalize }}
+          {{ key | capitalizeFilter }}
           <span class="arrow" :class="sortOrders[key] > 0 ? 'asc' : 'dsc'">
           </span>
         </th>
@@ -26,6 +26,15 @@
           >
             {{ entry[key] | moment("DD.MM.YYYY") }}
           </div>
+          <div v-else-if="typeof entry[key] === 'number'" class="numeric">
+            <!-- TOOD Util Function for number Format -->
+            {{
+              entry[key].toLocaleString("de-DE", {
+                style: "currency",
+                currency: "EUR"
+              })
+            }}
+          </div>
           <div v-else>
             {{ entry[key] }}
           </div>
@@ -35,8 +44,25 @@
     <tfoot>
       <tr>
         <th scope="row">Summen</th>
-        <td v-for="(column, idxR) in columns.slice(1)" :key="idxR">
-          {{ summeInColumn(filteredData, column) }}
+        <td
+          class="numeric"
+          v-for="(column, idxR) in columns.slice(1)"
+          :key="idxR"
+        >
+          {{
+            summeInColumn(filteredData, column).toLocaleString("de-DE", {
+              style: "currency",
+              currency: "USD"
+            })
+          }}
+        </td>
+      </tr>
+      <tr>
+        <td>Erfassen:</td>
+      </tr>
+      <tr>
+        <td v-for="(key, idxR) in columns" :key="idxR">
+          <input :placeholder="capitalize(key)" />
         </td>
       </tr>
     </tfoot>
@@ -137,7 +163,8 @@ export default Vue.extend({
     }
   },
   filters: {
-    capitalize(str: string): String {
+    //Todo String library
+    capitalizeFilter(str: string): String {
       return (str.charAt(0).toUpperCase() + str.slice(1))
         .replace(/([A-Z])/g, " $1")
         .trim();
@@ -147,6 +174,11 @@ export default Vue.extend({
     sortBy(key: string): void {
       this.sortKey = key;
       this.sortOrders[key] = this.sortOrders[key] * -1;
+    },
+    capitalize(str: string): String {
+      return (str.charAt(0).toUpperCase() + str.slice(1))
+        .replace(/([A-Z])/g, " $1")
+        .trim();
     },
     /**
      * returns number or empty String if non sum exists in the array
@@ -199,6 +231,10 @@ th,
 td {
   min-width: 120px;
   padding: 10px 20px;
+}
+
+.numeric {
+  text-align: right;
 }
 
 th.active {
